@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BankLogin from './BankLogin';
+import Login from './Login';
 import SignUp from './SignUp';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       { isSignUp ?
          <SignUp /> :
-         <BankLogin handleSignUp={handleSignUp}/>
+         <Login handleSignUp={handleSignUp}/>
       }
     </div>
   );

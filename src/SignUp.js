@@ -1,14 +1,13 @@
 import React from "react";
 import logo from './images/logo.jpg';
-import "./BankLogin.css";
+import "./LoginSignUp.css";
 
 const SignUp = () => {
     return (
         <div className="signup-container">
             <header>
-                <div className="logo">
-                <img src={logo} alt="Tourist Guide Logo" className="logo-img" />
-                <h2>Tourist Guide Sign Up</h2>
+                <div className="head">
+                <h2>Sign Up</h2>
                 <p>Create your account securely</p>
                 </div>
             </header>
@@ -37,14 +36,7 @@ const SignUp = () => {
                         placeholder="Enter email"
                         required
                         />
-
-                        <input
-                        type="tel"
-                        name="phoneNumber"
-                        placeholder="Enter phone number"
-                        required
-                        />
-
+                        
                         <input
                         type="password"
                         name="securityPin"

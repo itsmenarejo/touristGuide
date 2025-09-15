@@ -1,14 +1,13 @@
 import React from "react";
 import logo from './images/logo.jpg';
-import "./BankLogin.css";
+import "./LoginSignUp.css";
 
-const BankLogin = ({ handleSignUp }) => {
+const Login = ({ handleSignUp }) => {
   return (
-    <div className="login-container container">
+    <div className="login-container">
       <header>
-        <div className="logo">
-          <img src={logo} alt="Tourist Guide Logo" className="logo-img" />
-          <h2>Tourist Guide User Login</h2>
+        <div className="head">
+          <h2>User Login</h2>
           <p>Access your account securely</p>
         </div>
       </header>
@@ -33,17 +32,12 @@ const BankLogin = ({ handleSignUp }) => {
         </div>
       </main>
 
-      <footer className="credits">
-        <p>&copy; 2025 TN Online Tourist Guide. All rights reserved.</p>
-        <div className="nav">
-          <button onClick={ handleSignUp }>Sign Up</button>
-          <a href="https://github.com/itsmenarejo/onlineBanking.git">
-            GitHub
-          </a>
-        </div>
+      <footer className="foot">
+        <p>Don't have an account ? </p>
+        <button onClick={ handleSignUp }>Sign Up</button>
       </footer>
     </div>
   );
 };
 
-export default BankLogin;
+export default Login;
