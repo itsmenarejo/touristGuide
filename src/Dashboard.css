@@ -1,0 +1,118 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #d7eafc, #ffffff);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.dashboard-header input[type="text"] {
+  width: 30%;
+  padding: 0.7rem;
+  margin: 11px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.dashboard-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0056b3;
+}
+
+.dashboard-filter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    padding-right: 15px;
+}
+
+.filter-by {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.dashboard-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.dashboard-main .place-card {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    background: #fff;
+    border: 2px solid rgba(0, 102, 255, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.dashboard-main .place-card:hover {
+    transform: scale(1.02);
+}
+
+.dashboard-main .place-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.dashboard-main .place-card .name-location {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.place-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.place-loc {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.place-description {
+    font-size: 0.85rem;
+    margin-top: 3px;
+    line-height: 1.25;
+    color: #242124;
+}
+
+.district-group {
+  margin-bottom: 25px;
+}
+
+.district-heading {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+.district-places {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+
+

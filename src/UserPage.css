@@ -1,0 +1,20 @@
+.menu {
+    margin: 10px;
+    border: none;
+    background: none;
+    background-color: transparent;
+}
+
+.menu img {
+    height: 25px;
+    width: 25px;
+}
+
+.menu:hover {
+    scale: 1.2;
+}
+
+.menu-items .items {
+    list-style: none;
+}
+

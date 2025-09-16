@@ -1,5 +1,4 @@
 import React from "react";
-import logo from './images/logo.jpg';
 import "./LoginSignUp.css";
 
 const Login = ({ handleSignUp }) => {
