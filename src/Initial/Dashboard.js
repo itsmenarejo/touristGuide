@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import heritagePlaces from './HeritagePlaces';
+import heritagePlaces from '../Essentials/HeritagePlaces';
 import Placecard from './Placecard';
-import  filterByDistricts from './essentials';
+import  filterByDistricts from '../Essentials/essentials';
 import './Dashboard.css'
 
 const Dashboard = () => {

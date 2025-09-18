@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const SetProfile = ({setProfileSet, setViewProfile}) => {
 
@@ -20,6 +21,32 @@ const SetProfile = ({setProfileSet, setViewProfile}) => {
         }
     }, []);
 
+    const SuccessToast = () => {
+      toast.dismiss();
+      toast.success(
+        <div>
+          <div style={{ fontSize: '0.9em', marginTop: '4px' }}>
+              Profile Updated Successfully!
+          </div>
+        </div>,
+        {
+          position: "top-right",
+          autoClose: 2500,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          style: {
+            backgroundColor: "#d1fae5",
+            color: "#065f46",
+            borderRadius: "16px",
+            fontSize: "1rem",
+            fontWeight: "500",
+          },
+          containerId: "below-header",
+        }
+      );
+    };
+
     const handleChange = (e) => {
         setProfile({ ...profile, [e.target.name]: e.target.value });
     };
@@ -27,7 +54,8 @@ const SetProfile = ({setProfileSet, setViewProfile}) => {
      const handleSave = (e) => {
         e.preventDefault();
         localStorage.setItem("userProfile", JSON.stringify(profile));
-        alert("Profile saved locally!");
+        /*alert("Profile saved locally!");*/
+        SuccessToast();
         setProfileSet(false);
         setViewProfile(true);
     };

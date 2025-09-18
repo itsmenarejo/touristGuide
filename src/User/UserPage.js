@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import menu from './images/menu.png';
+import menu from '../images/menu.png';
 import './UserPage.css';
 import UserDashBoard from './UserDashBoard';
-import SetProfile from './SetProfile';
-import ViewProfile from './ViewProfile';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import SetProfile from './Profile/SetProfile';
+import ViewProfile from './Profile/ViewProfile';
+import { toast } from 'react-toastify';
+import logoutIcon from '../images/user-logout.png';
 
-const UserPage = () => {
+const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
   const [isProfileSet, setIsProfileSet] = useState(false);
   const [ProfileSet, setProfileSet] = useState(false);
   const [dashboardOpen, setDashboardOpen] = useState(true);
@@ -41,6 +41,58 @@ const UserPage = () => {
     );
   };
 
+  /*const logInSuccessToast = () => {
+      toast.dismiss();
+      toast.success(
+        <div>
+          <div style={{ fontSize: '0.9em', marginTop: '4px' }}>
+              Logged In Successfully!
+          </div>
+        </div>,
+        {
+          position: "top-right",
+          autoClose: 2500,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          style: {
+            backgroundColor: "#d1fae5",
+            color: "#065f46",
+            borderRadius: "16px",
+            fontSize: "1rem",
+            fontWeight: "500",
+          },
+          containerId: "below-header",
+        }
+      );
+  };*/
+
+  const logOutSuccessToast = () => {
+      toast.dismiss();
+      toast.success(
+        <div>
+          <div style={{ fontSize: '0.9em', marginTop: '4px' }}>
+              Logged Out Successfully!
+          </div>
+        </div>,
+        {
+          position: "top-right",
+          autoClose: 2500,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          style: {
+            backgroundColor: "#d1fae5",
+            color: "#065f46",
+            borderRadius: "16px",
+            fontSize: "1rem",
+            fontWeight: "500",
+          },
+          containerId: "below-header",
+        }
+      );
+  };
+
   const handleDashboardClick = () => {
     setDashboardOpen(true);
     setProfileSet(false);
@@ -58,6 +110,10 @@ const UserPage = () => {
   };
 
   useEffect(() => {
+    if (justLoggedIn) {
+      /*logInSuccessToast();*/
+      setJustLoggedIn(false);
+    }
     showWelcomeToast();
   }, []);
 
@@ -67,6 +123,11 @@ const UserPage = () => {
     setProfileSet(false);
     setIsNavOpen(false);
   };
+
+  const handleLogoutClick = () => {
+    setIsUserLogged(false);
+    logOutSuccessToast();
+  }
 
   return (
     <div className="userpage">
@@ -88,14 +149,17 @@ const UserPage = () => {
           <li><button className="item-btn">Nearby Places</button></li>
           <li><button className="item-btn">Wish List</button></li>
         </ul>
+        <div className="logout-btn-icon">
+          <button className="logout-btn item-btn" onClick={handleLogoutClick}>Log Out</button>
+          <img src={logoutIcon} alt="logout-icon"/>
+        </div>
       </div>
 
       <div className="user-page-main">
         {ProfileSet && <SetProfile setProfileSet={setProfileSet} setViewProfile={setViewProfile} />}
         {dashboardOpen && <UserDashBoard />}
-        {viewProfile && <ViewProfile />}
+        {viewProfile && <ViewProfile setProfileSet={setProfileSet} setViewProfile={setViewProfile} />}
       </div>
-      <ToastContainer />
     </div>
   );
 };

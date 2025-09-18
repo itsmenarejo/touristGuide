@@ -1,8 +1,8 @@
 import React from 'react';
-import banner from './images/heritage4.jpg';
+import banner from '../images/heritage4.jpg';
 
-import Placecard from './Placecard';
-import heritagePlaces from './HeritagePlaces';
+import Placecard from '../Initial/Placecard';
+import heritagePlaces from '../Essentials/HeritagePlaces';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
