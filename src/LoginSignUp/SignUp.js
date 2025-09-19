@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LoginSignUp.css";
 import { toast } from 'react-toastify';
 
-const SignUp = ({userLoginDetails, setUserLoginDetails, setIsSignUp}) => {
+const SignUp = ({setIsSignUp}) => {
 
     const [enteredUserInfo, setEnteredUserInfo] = useState({
         firstName:"",
@@ -67,25 +67,50 @@ const SignUp = ({userLoginDetails, setUserLoginDetails, setIsSignUp}) => {
         setEnteredUserInfo({...enteredUserInfo, [e.target.name]: e.target.value});
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-         const userExists = userLoginDetails.some(
-            (user) => user.email === enteredUserInfo.email
-        );
+        try {
+            const response = await fetch('http://localhost:5000/api/users/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: enteredUserInfo.firstName,
+                    lastName: enteredUserInfo.lastName,
+                    email: enteredUserInfo.email,
+                    securityPin: enteredUserInfo.password, // Corrected key from 'password' to 'securityPin'
+                }),
+            });
+            const data = await response.json();
 
-        if (userExists) {
+            if(response.ok){
+                signUpSuccessToast();
+                setIsSignUp(false);
+            } else{
+                signUpErrorToast();
+            }
+        } catch (error) {
+            console.error('SignUp Error: ', error);
             signUpErrorToast();
-        } else {
-            setUserLoginDetails((prev) => [...prev, enteredUserInfo]);
-            signUpSuccessToast();
-            setIsSignUp(false);
         }
+        // const userExists = userLoginDetails.some(
+        //     (user) => user.email === enteredUserInfo.email
+        // );
+
+        // if (userExists) {
+        //     signUpErrorToast();
+        // } else {
+        //     setUserLoginDetails((prev) => [...prev, enteredUserInfo]);
+        //     signUpSuccessToast();
+        //     setIsSignUp(false);
+        // }
     }
 
-    useEffect(() => {
-        localStorage.setItem("userLoggedtails", JSON.stringify(userLoginDetails));
-    }, [userLoginDetails]);
+    // useEffect(() => {
+    //     localStorage.setItem("userLoggedtails", JSON.stringify(userLoginDetails));
+    // }, [userLoginDetails]);
 
     return (
         <div className="signup-container">
@@ -98,7 +123,7 @@ const SignUp = ({userLoginDetails, setUserLoginDetails, setIsSignUp}) => {
 
             <main>
                 <div className="signup">
-                    <form action="" method="POST" onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div className="name">
                             <input
                             type="text"
@@ -141,7 +166,7 @@ const SignUp = ({userLoginDetails, setUserLoginDetails, setIsSignUp}) => {
                 </div>
             </main>
         </div>
-    )
-}
+    );
+};
 
 export default SignUp;

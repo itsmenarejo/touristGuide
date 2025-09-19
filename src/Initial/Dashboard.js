@@ -1,64 +1,90 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import heritagePlaces from '../Essentials/HeritagePlaces';
 import Placecard from './Placecard';
-import  filterByDistricts from '../Essentials/essentials';
-import './Dashboard.css'
+import filterByDistricts from '../Essentials/essentials';
+import './Dashboard.css';
 
 const Dashboard = () => {
+  const [filter, setFilter] = useState('default');
+  const [heritagePlaces, setHeritagePlaces] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [ filter, setFilter] = useState('default');
 
-     let filteredPlaces = filter !== 'District'
-        ? heritagePlaces.filter(place => place.type === filter)
-        : heritagePlaces;
+  useEffect (() => {
+    const fetchPlaces = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/places');
+        if (!response.ok) {
+          throw new Error('Failed to fetch places');
+        }
+        const data = await response.json();
+        setHeritagePlaces(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+    fetchPlaces();
+  }, []);
 
-    if (filter === 'District') {
-        filteredPlaces = filterByDistricts(heritagePlaces);
-    } else if (filter === 'default') {
-        filteredPlaces = heritagePlaces;
+  const getFilteredPlaces = () => {
+    if (filter === 'default') {
+      return heritagePlaces;
+    } else if (filter === 'District') {
+      return Object.entries(filterByDistricts(heritagePlaces));
+    } else {
+      return heritagePlaces.filter(place => place.type === filter);
     }
+  };
 
-    return (
-        <div className="dashboard-container">
-            <div className="dashboard-header">
-                <h3>Heritage Places</h3>
-                <input type="text" placeholder="Search Places" />
-            </div>
+  const filteredPlaces = getFilteredPlaces();
 
-            <div className="dashboard-filter">
-                <select className="filter-by" id="filter-by" onChange={ (e) => setFilter(e.target.value)}>
-                    <option value="default">Filter By</option>
-                    <option value="District">Districts</option>
-                    <option value="Temple">Temples</option>
-                    <option value="Palace">Palaces</option>
-                    <option value="Memorial">Memorials</option>
-                </select>
-            </div>
+  if (loading) {
+    return <div className='loading'>Loading...</div>;
+  }
+  if (error) {
+    return <div className='error'>Error: {error}</div>;
+  }
 
-            <div className="dashboard-main">
+  return (
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h3>Heritage Places</h3>
+        <input type="text" placeholder="Search Places" />
+      </div>
 
-                {filter === 'default' && filteredPlaces.map((place) => (
-                    <Placecard place={place} />
+      <div className="dashboard-filter">
+        <select className="filter-by" id="filter-by" onChange={(e) => setFilter(e.target.value)}>
+          <option value="default">Filter By</option>
+          <option value="District">Districts</option>
+          <option value="Temple">Temples</option>
+          <option value="Palace">Palaces</option>
+          <option value="Memorial">Memorials</option>
+        </select>
+      </div>
+
+      <div className="dashboard-main">
+        {filter === 'District' ? (
+          filteredPlaces.map(([district, groupList]) => (
+            <div key={district} className="district-group">
+              <h3 className="district-heading">{district}</h3>
+              <div className="district-places">
+                {groupList.map((place) => (
+                  <Placecard key={place.name} place={place} />
                 ))}
-
-                {filter === 'District' &&
-                    Object.entries(filterByDistricts(heritagePlaces)).map(([district, groupList]) => (
-                        <div key={district} className="district-group">
-                            <h3 className="district-heading">{district}</h3>
-                            <div className="district-places">
-                                {groupList.map((place) => (
-                                <Placecard place={place} />
-                                ))}
-                            </div>
-                        </div>
-                ))}
-
-                {filter !== 'District' && filteredPlaces.map((place) => (
-                    <Placecard place={place} />
-                ))}
+              </div>
             </div>
-        </div>
-    )
-}
+          ))
+        ) : (
+          filteredPlaces.map((place) => (
+            <Placecard key={place.name} place={place} />
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;

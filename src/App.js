@@ -13,13 +13,13 @@ function App() {
   const [isUserLogged, setIsUserLogged] = useState(false);
 
   const [justLoggedIn, setJustLoggedIn] = useState(false);
-  const [userLoginDetails, setUserLoginDetails] = useState([]);
+  // const [userLoginDetails, setUserLoginDetails] = useState([]);
 
   useEffect(() => {
-          const storedUserLoginDetails = localStorage.getItem("userLoggedtails");
-          if (storedUserLoginDetails) {
-          setUserLoginDetails(JSON.parse(storedUserLoginDetails));
-          }
+      const token = localStorage.getItem("token");
+      if (token) {
+        setIsUserLogged(true); 
+      }
   }, []);
 
   const handleSignUp = () => {
@@ -31,7 +31,7 @@ function App() {
       <div className="header">
         <div className="brand">
           <img className="logo-img" src={logo} alt="logo" />
-          <h1 className="header-text">AI-Powered Tourist Guide</h1>
+          <h1 className="header-text">AI-Powered Heritage Guide</h1>
         </div>
 
         {!isLogInClicked && !isUserLogged &&(
@@ -59,11 +59,11 @@ function App() {
 
       <div className="login-signup">
         {isLogInClicked && !isSignUp && !isUserLogged &&
-          <Login handleSignUp={handleSignUp} setJustLoggedIn={setJustLoggedIn} setIsUserLogged={setIsUserLogged} userLoginDetails={userLoginDetails} setIsLogInClicked={setIsLogInClicked} />
+          <Login handleSignUp={handleSignUp} setJustLoggedIn={setJustLoggedIn} setIsUserLogged={setIsUserLogged} setIsLogInClicked={setIsLogInClicked} />
         }
 
         {isLogInClicked && isSignUp && !isUserLogged &&
-          <SignUp userLoginDetails={userLoginDetails} setUserLoginDetails={setUserLoginDetails} setIsSignUp={setIsSignUp} />
+          <SignUp setIsSignUp={setIsSignUp} />
         }
       </div>
       <ToastContainer />
