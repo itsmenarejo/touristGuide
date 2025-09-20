@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import "./LoginSignUp.css";
 import { toast } from 'react-toastify';
+import back from '../images/left-arrow.png';
 
-const Login = ({ 
-  handleSignUp, 
-  setIsUserLogged, 
-  // userLoginDetails, 
-  setJustLoggedIn, 
-  setIsLogInClicked 
+const Login = ({
+  handleSignUp,
+  setIsUserLogged,
+  // userLoginDetails,
+  setJustLoggedIn,
+  setIsLogInClicked
 }) => {
 
   const [enteredLoginInfo, setEnteredLoginInfo] = useState({
@@ -98,7 +99,10 @@ const Login = ({
     <div className="login-container">
       <header>
         <div className="head">
-          <h2>User Login</h2>
+          <div className="backBtn-h2">
+            <button onClick={() => setIsLogInClicked(false)} ><img src={back} alt="nav-back" /></button>
+            <h2>User Login</h2>
+          </div>
           <p>Access your account securely</p>
         </div>
       </header>

@@ -4,6 +4,7 @@ import './UserPage.css';
 import UserDashBoard from './UserDashBoard';
 import SetProfile from './Profile/SetProfile';
 import ViewProfile from './Profile/ViewProfile';
+import Chatbot from '../chatbot/chatbot';
 import { toast } from 'react-toastify';
 import logoutIcon from '../images/user-logout.png';
 
@@ -14,6 +15,7 @@ const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
   const [viewProfile, setViewProfile] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const [profileUpdated, setProfileUpdated] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const token = localStorage.getItem('token'); // Correct location
 
   const showWelcomeToast = (userName) => {
@@ -74,6 +76,7 @@ const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
     setIsProfileSet(false);
     setViewProfile(false);
     setIsNavOpen(false);
+    setIsChatOpen(false);
     if(userProfile){
       showWelcomeToast(userProfile.firstName);
     }
@@ -84,12 +87,14 @@ const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
     setDashboardOpen(false);
     setViewProfile(false);
     setIsNavOpen(false);
+    setIsChatOpen(false);
   };
 
   const handleViewProfileClick = () => {
     setViewProfile(true);
+    setIsChatOpen(false);
     setDashboardOpen(false);
-    setIsProfileSet(false);
+    //setIsProfileSet(false);
     setIsNavOpen(false);
   };
 
@@ -97,6 +102,14 @@ const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
     localStorage.removeItem('token');
     setIsUserLogged(false);
     logOutSuccessToast();
+  }
+
+  const handleChatClick = () => {
+    setIsChatOpen(true);
+    setIsProfileSet(false);
+    setViewProfile(false);
+    setIsNavOpen(false);
+    setDashboardOpen(false);
   }
 
   useEffect(() => {
@@ -150,7 +163,7 @@ const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
           ) : (
             <li><button className="item-btn" onClick={handleViewProfileClick}>View Profile</button></li>
           )}
-          <li><button className="item-btn">AI Assistant</button></li>
+          <li><button className="item-btn" onClick={handleChatClick}>AI Assistant</button></li>
           <li><button className="item-btn">Nearby Places</button></li>
           <li><button className="item-btn">Wish List</button></li>
         </ul>
@@ -161,23 +174,43 @@ const UserPage = ({ justLoggedIn, setJustLoggedIn, setIsUserLogged }) => {
       </div>
 
       <div className="user-page-main">
-        {isProfileSet && 
-          <SetProfile 
-            setProfileSet={setIsProfileSet} 
-            setViewProfile={setViewProfile} 
+
+        {isProfileSet &&
+          <SetProfile
+            setProfileSet={setIsProfileSet}
+            setViewProfile={setViewProfile}
             setProfileUpdated={setProfileUpdated}
-            token={token} 
+            token={token}
           />
         }
+
         {dashboardOpen && <UserDashBoard />}
-        {viewProfile && 
-          <ViewProfile 
-            setProfileSet={setIsProfileSet} 
-            setViewProfile={setViewProfile} 
+
+        {viewProfile &&
+          <ViewProfile
+            setProfileSet={setIsProfileSet}
+            setViewProfile={setViewProfile}
             profileUpdated={profileUpdated}
             token={token}
           />
         }
+      </div>
+
+      <div className="user-page-main-split">
+        {/* Left: Chatbot */}
+        {isChatOpen && (
+          <div className="chatbot-left">
+            <Chatbot />
+          </div>
+        )}
+
+        {/* Right: Info Section */}
+        {isChatOpen && (
+          <div className="info-right">
+            <h2>Info Section Placeholder</h2>
+            <p>This section will display relevant information here.</p>
+        </div>
+        )}
       </div>
     </div>
   );

@@ -69,10 +69,37 @@ body {
   box-shadow: 0 0 10px 1px rgba(0, 102, 255, 0.7);
 }
 
-.head h2 {
+.backBtn-h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.backBtn-h2 button {
+  border: none;
+  background: none;
+  background: none;
+  position: absolute;
+  left: -10px;
+}
+
+
+.backBtn-h2 button:hover {
+  transform: scale(1.1);
+}
+
+.backBtn-h2 img {
+  height: 24px;
+  width: 24px;
+}
+
+.backBtn-h2 h2 {
   font-size: 1.8rem;
   font-weight: bold;
   color: #0056b3;
+  text-align: center;
+  flex-grow: 1;
 }
 
 .head p {

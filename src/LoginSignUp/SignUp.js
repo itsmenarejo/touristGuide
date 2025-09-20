@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./LoginSignUp.css";
 import { toast } from 'react-toastify';
+import back from '../images/left-arrow.png';
 
 const SignUp = ({setIsSignUp}) => {
 
@@ -116,9 +117,12 @@ const SignUp = ({setIsSignUp}) => {
         <div className="signup-container">
             <header>
                 <div className="head">
-                <h2>Sign Up</h2>
-                <p>Create your account securely</p>
-                </div>
+                    <div className="backBtn-h2">
+                        <button onClick={() => setIsSignUp(false)} ><img src={back} alt="nav-back" /></button>
+                        <h2>Sign Up</h2>
+                    </div>
+                    <p>Create your account securely</p>
+        </div>
             </header>
 
             <main>

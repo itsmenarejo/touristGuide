@@ -494,6 +494,38 @@ textarea {
 
 
 
+/* Split screen container for chatbot*/
+.user-page-main-split {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* Chatbot left panel */
+.chatbot-left {
+  flex: 1;
+  background: #f6f2ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Info right panel */
+.info-right {
+  flex: 1;
+  background: #ebf4fe;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+
+
+
+
 
 
 
